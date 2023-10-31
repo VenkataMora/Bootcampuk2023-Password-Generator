@@ -90,17 +90,23 @@ var upperCasedCharacters = [
 
 // Function to prompt user for password options
 function getPasswordOptions() {
+  var n = [];
   var passLength = parseInt(prompt("Enter password length between (8 to 128)"));
-  if (passLength >= 8 && passLength <= 128) {
+  if ((typeof passLength === "number" && passLength >= 8 && passLength <= 128)) {
     var LowerCase = confirm("password must include atleast 1 Lowercase");
     if (LowerCase === true) {
+      n = n.concat(lowerCasedCharacters);
       var UpperCase = confirm("password must include atleast 1 Uppercase");
+
       if (UpperCase === true) {
+        n = n.concat(upperCasedCharacters);
         var Numbers = confirm("password must include atleast 1 Number");
         if (Numbers === true) {
+          n = n.concat(numericCharacters);
           var Symbols = confirm("password must include atleast 1 Special Character");
           if (Symbols === true) {
-            return { length: passLength, lowerCase: true, upperCase: true, numbers: true, symbols: true };
+            n = n.concat(specialCharacters);
+
           } else {
             alert('You need to selecr atleast 1 special charecter');
             getPasswordOptions();
@@ -113,24 +119,37 @@ function getPasswordOptions() {
         alert('You need to select Upper case atleast 1 charecter');
         getPasswordOptions();
       }
-    }else {
+    } else {
       alert('You need to select lower case atleast 1 charecter');
       getPasswordOptions();
-  }}else{
+    }
+  } else {
     alert('Please enter a password length between 8 and 128');
     getPasswordOptions();
   }
+  console.log([n, passLength]);
+  return [n, passLength];
+
 }
 // getPasswordOptions();
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-
+  var a = Math.floor(Math.random() * arr.passLength);
+ 
+  return arr[a];
 }
+console.log(arr[a]);
 
 // Function to generate password with user input
 function generatePassword() {
-
+  var b = getPasswordOptions();
+  var c = "";
+  for (var i = 0; i < b[1]; i++) {
+    c += getRandom(b[0]);
+  }
+  console.log(c);
+  return c;
 }
 
 // Get references to the #generate element
