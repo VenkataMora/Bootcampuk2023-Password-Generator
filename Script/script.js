@@ -93,53 +93,39 @@ function getPasswordOptions() {
   var n = [];
   var passLength = parseInt(prompt("Enter password length between (8 to 128)"));
   if ((typeof passLength === "number" && passLength >= 8 && passLength <= 128)) {
-    var LowerCase = confirm("password must include atleast 1 Lowercase");
-    if (LowerCase === true) {
-      n = n.concat(lowerCasedCharacters);
-      var UpperCase = confirm("password must include atleast 1 Uppercase");
-
-      if (UpperCase === true) {
-        n = n.concat(upperCasedCharacters);
-        var Numbers = confirm("password must include atleast 1 Number");
-        if (Numbers === true) {
-          n = n.concat(numericCharacters);
-          var Symbols = confirm("password must include atleast 1 Special Character");
-          if (Symbols === true) {
-            n = n.concat(specialCharacters);
-
-          } else {
-            alert('You need to selecr atleast 1 special charecter');
-            getPasswordOptions();
-          }
-        } else {
-          alert('You need to select atlest 1 number');
-          getPasswordOptions();
-        }
-      } else {
-        alert('You need to select Upper case atleast 1 charecter');
-        getPasswordOptions();
-      }
-    } else {
-      alert('You need to select lower case atleast 1 charecter');
+    var Lower = confirm("password must include at least one Lowercase letter");
+    var Upper = confirm("password must include atleast 1 Uppercase");
+    var Numbers = confirm("password must include atleast 1 Number");
+    var Symbols = confirm("password must include atleast 1 Special Character");
+    if (!(Lower || Upper || Numbers || Symbols)) {
+      alert('You need to select atleast one character type');
       getPasswordOptions();
-    }
+    }  
   } else {
-    alert('Please enter a password length between 8 and 128');
-    getPasswordOptions();
-  }
-  console.log([n, passLength]);
-  return [n, passLength];
-
+  alert('Please enter a password length between 8 and 128');
+  getPasswordOptions();
+}
+if (Lower) {
+  n = n.concat(lowerCasedCharacters);
+}
+if (Upper) {
+  n = n.concat(upperCasedCharacters);
+}
+if (Numbers) {
+  n = n.concat(numericCharacters);
+}
+if (Symbols) {
+  n = n.concat(specialCharacters);
+}
+return [n, passLength];
 }
 // getPasswordOptions();
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-  var a = Math.floor(Math.random() * arr.passLength);
- 
+  var a = Math.floor(Math.random() * arr.length);
   return arr[a];
 }
-console.log(arr[a]);
 
 // Function to generate password with user input
 function generatePassword() {
@@ -148,7 +134,6 @@ function generatePassword() {
   for (var i = 0; i < b[1]; i++) {
     c += getRandom(b[0]);
   }
-  console.log(c);
   return c;
 }
 
